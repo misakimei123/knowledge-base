@@ -1,0 +1,54 @@
+# 置信度评估规则配置（支持热更新）
+
+vector:
+  metric_type: "COSINE"
+  radius_threshold: 0.65          # 低于此值的向量结果直接过滤
+  topk_weights: "exponential"     # exponential / uniform
+  decay_factor: 0.7               # 排名衰减系数
+
+kg:
+  min_path_score: 0.3             # 最小路径评分阈值
+  relation_weights:               # 关系类型权重（人工标注）
+    "employed_by": 1.0
+    "located_in": 0.9
+    "mentioned_in": 0.6
+  entity_type_bonus:              # 实体类型加分
+    "Policy": 0.1
+    "Department": 0.05
+  path_decay: 0.85                # 路径长度衰减系数
+
+faithfulness:
+  strategy: "nli"                 # keyword / nli / fact
+  nli_model_path: "models/bge-reranker-v2-m3.onnx"
+  keyword_min_overlap: 0.3        # 关键词策略的最小重叠率
+
+fusion:
+  default_weights:
+    vector: 0.4
+    kg: 0.4
+    faithfulness: 0.2
+  category_rules:                 # 按分类动态调整权重
+    "HR_Policy":
+      kg: 0.5
+      faithfulness: 0.3
+    "Technical_Doc":
+      vector: 0.6
+      kg: 0.2
+  conflict_rules:                 # 信号冲突处理
+    high_retrieval_low_faithfulness: 0.7  # 降级系数
+    kg_vector_mismatch: 0.85
+
+calibration:
+  enabled: true
+  method: "temperature_scaling"   # temperature_scaling / platt_scaling
+  params_path: "models/calibration_params.json"
+  retrain_schedule: "monthly"     # 校准参数重训练频率
+
+decision:
+  thresholds:
+    high: 0.75
+    medium: 0.5
+  actions:
+    high: ["return_answer", "cache"]
+    medium: ["return_answer", "show_sources", "log_for_review"]
+    low: ["refuse_answer", "suggest_search", "create_ticket"]
