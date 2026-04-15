@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "黄金数据集 Schema",
+  "description": "用于置信度评估的黄金测试用例格式定义",
+  "type": "object",
+  "required": ["samples"],
+  "properties": {
+    "samples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "query", "answer", "answer_correct"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "唯一标识符"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["HR_Policy", "Technical_Doc", "Finance", "Compliance"],
+            "description": "文档分类"
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "用户查询"
+          },
+          "contexts": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "description": "相关上下文片段"
+          },
+          "answer": {
+            "type": "string",
+            "description": "系统生成的答案"
+          },
+          "answer_correct": {
+            "type": "boolean",
+            "description": "答案是否正确（人工标注）"
+          },
+          "simulated_confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "模拟的原始置信度分数（用于校准训练）"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "source_doc": {"type": "string"},
+              "section": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

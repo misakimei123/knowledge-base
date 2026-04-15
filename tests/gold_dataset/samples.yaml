@@ -1,0 +1,243 @@
+# 黄金数据集 Schema
+
+samples:
+  - id: "sample_001"
+    category: "HR_Policy"
+    query: "员工年假有多少天？"
+    contexts:
+      - "根据公司政策，全职员工每年享有 15 天带薪年假。工作满 5 年后增加至 20 天。"
+    answer: "全职员工每年享有 15 天带薪年假，工作满 5 年后增加至 20 天。"
+    answer_correct: true
+    simulated_confidence: 0.92
+    metadata:
+      source_doc: "employee_handbook.pdf"
+      section: "休假政策"
+  
+  - id: "sample_002"
+    category: "HR_Policy"
+    query: "试用期多长？"
+    contexts:
+      - "新员工试用期为 3 个月，表现优秀者可提前转正。"
+    answer: "试用期为 3 个月。"
+    answer_correct: true
+    simulated_confidence: 0.88
+    metadata:
+      source_doc: "employee_handbook.pdf"
+      section: "入职管理"
+  
+  - id: "sample_003"
+    category: "Technical_Doc"
+    query: "如何配置数据库连接池？"
+    contexts:
+      - "在 config.yaml 中设置 database.pool_size=10 和 database.max_overflow=20。"
+    answer: "在配置文件中设置 pool_size 为 10，max_overflow 为 20。"
+    answer_correct: true
+    simulated_confidence: 0.85
+    metadata:
+      source_doc: "tech_guide.md"
+      section: "数据库配置"
+  
+  - id: "sample_004"
+    category: "Finance"
+    query: "报销流程需要多久？"
+    contexts:
+      - "财务部门通常在收到完整报销单据后 5-7 个工作日内完成审核打款。"
+    answer: "报销流程需要 5-7 个工作日。"
+    answer_correct: true
+    simulated_confidence: 0.79
+    metadata:
+      source_doc: "finance_policy.pdf"
+      section: "费用报销"
+  
+  - id: "sample_005"
+    category: "HR_Policy"
+    query: "加班有加班费吗？"
+    contexts:
+      - "公司实行弹性工作制，原则上不鼓励加班。特殊情况需主管审批后可调休。"
+    answer: "加班可以申请调休，需要提前审批。"
+    answer_correct: true
+    simulated_confidence: 0.72
+    metadata:
+      source_doc: "employee_handbook.pdf"
+      section: "考勤管理"
+  
+  - id: "sample_006"
+    category: "Compliance"
+    query: "数据保密协议有效期多久？"
+    contexts:
+      - "保密协议在员工离职后仍然有效，期限为离职后 2 年。"
+    answer: "保密协议在离职后 2 年内有效。"
+    answer_correct: true
+    simulated_confidence: 0.91
+    metadata:
+      source_doc: "compliance_manual.pdf"
+      section: "保密条款"
+  
+  - id: "sample_007"
+    category: "Technical_Doc"
+    query: "API 限流是多少？"
+    contexts:
+      - "生产环境 API 限流为每分钟 100 次请求，超过限制将返回 429 错误。"
+    answer: "API 限流是每分钟 100 次请求。"
+    answer_correct: true
+    simulated_confidence: 0.94
+    metadata:
+      source_doc: "api_docs.md"
+      section: "使用限制"
+  
+  - id: "sample_008"
+    category: "HR_Policy"
+    query: "五险一金缴纳比例？"
+    contexts:
+      - "公司按上海市标准缴纳五险一金，具体比例参照当年社保局公布数据。"
+    answer: "按照上海市标准缴纳，具体比例参考社保局数据。"
+    answer_correct: true
+    simulated_confidence: 0.68
+    metadata:
+      source_doc: "employee_handbook.pdf"
+      section: "薪酬福利"
+  
+  - id: "sample_009"
+    category: "Finance"
+    query: "差旅住宿标准是多少？"
+    contexts:
+      - "一线城市住宿标准为每晚 500 元，二线城市 350 元，其他城市 250 元。"
+    answer: "一线城市 500 元/晚，二线城市 350 元/晚，其他城市 250 元/晚。"
+    answer_correct: true
+    simulated_confidence: 0.87
+    metadata:
+      source_doc: "travel_policy.pdf"
+      section: "差旅标准"
+  
+  - id: "sample_010"
+    category: "Technical_Doc"
+    query: "日志保留多久？"
+    contexts:
+      - "系统日志默认保留 30 天，审计日志保留 1 年。"
+    answer: "系统日志保留 30 天，审计日志保留 1 年。"
+    answer_correct: true
+    simulated_confidence: 0.90
+    metadata:
+      source_doc: "ops_guide.md"
+      section: "日志管理"
+  
+  # 负样本（错误答案）
+  - id: "sample_011"
+    category: "HR_Policy"
+    query: "产假多少天？"
+    contexts:
+      - "女员工产假为 98 天基础产假 + 上海奖励假 60 天，共计 158 天。"
+    answer: "产假是 90 天。"
+    answer_correct: false
+    simulated_confidence: 0.75
+    metadata:
+      source_doc: "employee_handbook.pdf"
+      section: "休假政策"
+  
+  - id: "sample_012"
+    category: "Finance"
+    query: "发票类型要求？"
+    contexts:
+      - "报销必须提供增值税专用发票或普通发票，收据不予报销。"
+    answer: "可以提供收据报销。"
+    answer_correct: false
+    simulated_confidence: 0.62
+    metadata:
+      source_doc: "finance_policy.pdf"
+      section: "发票管理"
+  
+  - id: "sample_013"
+    category: "Technical_Doc"
+    query: "Redis 密码在哪里配置？"
+    contexts:
+      - "Redis 密码存储在 vault 系统中，通过环境变量 REDIS_PASSWORD 引用。"
+    answer: "Redis 密码写在配置文件里。"
+    answer_correct: false
+    simulated_confidence: 0.58
+    metadata:
+      source_doc: "security_guide.md"
+      section: "凭证管理"
+  
+  - id: "sample_014"
+    category: "Compliance"
+    query: "外部数据共享需要审批吗？"
+    contexts:
+      - "向外部第三方共享数据必须经过数据安全委员会审批，并签署数据保护协议。"
+    answer: "不需要审批，可以直接共享。"
+    answer_correct: false
+    simulated_confidence: 0.45
+    metadata:
+      source_doc: "compliance_manual.pdf"
+      section: "数据共享"
+  
+  - id: "sample_015"
+    category: "HR_Policy"
+    query: "绩效考核周期？"
+    contexts:
+      - "公司实行季度绩效考核，每年 4 次，分别在 3/6/9/12 月进行。"
+    answer: "绩效考核是半年一次。"
+    answer_correct: false
+    simulated_confidence: 0.52
+    metadata:
+      source_doc: "performance_policy.pdf"
+      section: "考核制度"
+  
+  - id: "sample_016"
+    category: "Technical_Doc"
+    query: "备份频率是多少？"
+    contexts:
+      - "数据库每日凌晨 2 点全量备份，每小时增量备份。"
+    answer: "每天备份一次。"
+    answer_correct: false
+    simulated_confidence: 0.67
+    metadata:
+      source_doc: "ops_guide.md"
+      section: "备份策略"
+  
+  - id: "sample_017"
+    category: "Finance"
+    query: "借款额度限制？"
+    contexts:
+      - "员工因公借款上限为 5 万元，超过需 CFO 特批。"
+    answer: "借款没有额度限制。"
+    answer_correct: false
+    simulated_confidence: 0.48
+    metadata:
+      source_doc: "finance_policy.pdf"
+      section: "借款管理"
+  
+  - id: "sample_018"
+    category: "HR_Policy"
+    query: "培训预算谁批准？"
+    contexts:
+      - "部门培训预算由部门负责人初审，人力资源部复核，CFO 终审。"
+    answer: "培训预算只需要部门经理批准。"
+    answer_correct: false
+    simulated_confidence: 0.55
+    metadata:
+      source_doc: "training_policy.pdf"
+      section: "预算管理"
+  
+  - id: "sample_019"
+    category: "Compliance"
+    query: "利益冲突申报时间？"
+    contexts:
+      - "员工应在入职时、每年年初及发生利益冲突情形时立即申报。"
+    answer: "只需要入职时申报一次。"
+    answer_correct: false
+    simulated_confidence: 0.42
+    metadata:
+      source_doc: "compliance_manual.pdf"
+      section: "利益冲突"
+  
+  - id: "sample_020"
+    category: "Technical_Doc"
+    query: "代码审查要求？"
+    contexts:
+      - "所有代码合并前必须经过至少 2 名高级工程师审查通过。"
+    answer: "代码审查是可选的。"
+    answer_correct: false
+    simulated_confidence: 0.38
+    metadata:
+      source_doc: "dev_guide.md"
+      section: "代码规范"
